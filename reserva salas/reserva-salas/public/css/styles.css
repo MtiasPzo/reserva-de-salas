@@ -338,6 +338,8 @@ textarea.csv-out { font-family: var(--font-mono); font-size: .75rem; min-height:
   .tabs button { white-space: nowrap; min-height: 44px; }
 }
 @media (max-width: 860px) {
+  body { font-size: 16px; }
+  input, select, textarea { font-size: 16px; }
   .reservar-grid, .docente-grid { grid-template-columns: 1fr; }
   .rooms { flex-direction: row; overflow-x: auto; padding-bottom: .4rem; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
   .rooms li { flex: 0 0 min(210px, 70vw); scroll-snap-align: start; }
@@ -354,10 +356,43 @@ textarea.csv-out { font-family: var(--font-mono); font-size: .75rem; min-height:
 }
 @media (max-width: 640px) {
   :root { --slot-h: 32px; }
-  input, select, textarea { font-size: 16px; }
-  .btn, .icon-btn, .chip, .seg-btn { min-height: 44px; }
-  .wrap { padding-block: 1rem 2rem; }
+  html { font-size: 17px; }
+  body { font-size: 1rem; }
+  .small { font-size: .92rem; }
+  .eyebrow { font-size: .86rem; }
+  .h-page { font-size: 1.75rem; }
+  .h-sec { font-size: 1.22rem; }
+  .btn, .icon-btn, .chip, .seg-btn { min-height: 46px; }
+  .btn, .btn-sm { font-size: 1rem; }
+  .chip, .seg-btn { font-size: .92rem; }
+  .field label, .field .label { font-size: .95rem; }
+  input, select, textarea { min-height: 50px; padding: .7rem .8rem; }
+  .wrap { padding-block: 1.2rem 2.5rem; }
   .view { gap: .9rem; }
+  .login { min-height: 100svh; }
+  .login-art { display: none; }
+  .login-panel { max-width: 540px; justify-content: flex-start; gap: 1.25rem; padding-block: 2rem; padding-inline: max(20px, env(safe-area-inset-left, 0px)) max(20px, env(safe-area-inset-right, 0px)); }
+  .brand-xl { font-size: clamp(2.7rem, 11vw, 3.4rem); }
+  .lead { font-size: 1.08rem; line-height: 1.5; }
+  #form-login { gap: 1.1rem; }
+  #form-login .btn-lg { min-height: 56px; font-size: 1.1rem; }
+  .demo-accounts { padding-top: 1.2rem; }
+  .demo-accounts .chips { gap: .55rem; }
+  .topbar-inner { padding-block: .7rem; }
+  .tabs button { font-size: 1rem; padding-inline: .85rem; }
+  .rooms li { flex-basis: min(260px, 78vw); }
+  .room { min-height: 112px; padding: .8rem; }
+  .room-code { font-size: .82rem; }
+  .room-name { font-size: 1rem; }
+  .room-meta { font-size: .88rem; }
+  .pill { font-size: .75rem; }
+  .legend { font-size: .92rem; }
+  .cal { grid-template-columns: 60px repeat(6, minmax(116px, 1fr)); min-width: 756px; }
+  .cal-h strong { font-size: .88rem; }
+  .cal-h span { font-size: .78rem; }
+  .cal-time { font-size: .7rem; }
+  .blk { font-size: .78rem; }
+  .blk b { font-size: .74rem; }
   .cal-nav { width: 100%; }
   .cal-nav .btn { min-height: 44px; }
   .cal-nav #cal-today { flex: 1; }
@@ -366,13 +401,13 @@ textarea.csv-out { font-family: var(--font-mono); font-size: .75rem; min-height:
   .filters-actions { width: 100%; }
   .filters-actions .btn { flex: 1; min-height: 44px; }
   .table-wrap { border: 0; background: transparent; overflow: visible; }
-  .table { display: block; }
+  .table { display: block; font-size: 1rem; }
   .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .table tbody { display: grid; gap: .75rem; }
   .table tr { display: block; padding: .55rem .8rem; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); }
   .table td { display: block; padding: .35rem 0; border: 0; overflow-wrap: anywhere; }
   .table td + td { border-top: 1px solid var(--line); }
-  .table td[data-label]::before { content: attr(data-label); display: block; margin-bottom: .1rem; color: var(--ink-soft); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .table td[data-label]::before { content: attr(data-label); display: block; margin-bottom: .1rem; color: var(--ink-soft); font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   .table td.table-empty { padding: 1.1rem .3rem; }
   .table .actions { justify-content: flex-start; }
   .table .actions .btn { min-height: 44px; }
@@ -386,7 +421,6 @@ textarea.csv-out { font-family: var(--font-mono); font-size: .75rem; min-height:
   .topbar-actions { gap: .3rem; }
   .topbar-actions .icon-btn { width: 42px; height: 42px; }
   .topbar-actions #btn-logout { min-height: 42px; padding-inline: .7rem; }
-  .login-art { min-height: 80px; }
   .login-panel { padding-block: 1.5rem 2rem; }
   .row-2 { grid-template-columns: 1fr; }
   #form-reserva .row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }

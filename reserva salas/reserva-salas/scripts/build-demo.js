@@ -8,16 +8,18 @@ fs.rmSync(out, { recursive: true, force: true });
 for (const d of ['css', 'js', 'database']) fs.mkdirSync(path.join(out, d), { recursive: true });
 
 const html = fs.readFileSync(path.join(root, 'public', 'index.html'), 'utf8');
-const head = html.slice(html.indexOf('<title>'), html.indexOf('</head>')).trim();
+// Conservar el viewport: sin él el navegador móvil reduce toda la interfaz.
+const prefix = html.slice(0, html.indexOf('<!--APP-START-->'));
 const body = html.slice(html.indexOf('<!--APP-START-->'), html.indexOf('<!--APP-END-->') + '<!--APP-END-->'.length);
-const page = `${head}
-${body}
+const page = `${prefix}${body}
 <script>window.RESERVA_DEMO = true;</script>
 <script src="js/sql-asm.js"></script>
 <script src="js/service.js"></script>
 <script src="js/routes.js"></script>
 <script src="js/api.js"></script>
 <script src="js/app.js"></script>
+</body>
+</html>
 `;
 fs.writeFileSync(path.join(out, 'index.html'), page);
 const copy = (a, b) => fs.copyFileSync(path.join(root, a), path.join(out, b));
