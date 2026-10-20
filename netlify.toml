@@ -1,0 +1,7 @@
+[build]
+  base = "reserva salas/reserva-salas"
+  command = "node scripts/build-demo.js"
+  publish = "dist-demo"
+
+[build.environment]
+  NODE_VERSION = "22"
