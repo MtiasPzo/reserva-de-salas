@@ -1,0 +1,27 @@
+digraph ER {
+  graph [rankdir=LR, splines=true, nodesep=0.45, ranksep=0.9, fontname="Helvetica", bgcolor="white", pad=0.2];
+  node [shape=plaintext, fontname="Helvetica", fontsize=10];
+  edge [color="#5D0E41", arrowhead=crow, arrowtail=tee, dir=both, penwidth=1.2];
+  
+  usuario [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#E97777"><b>usuario</b></td></tr><tr><td align="left">PK id<br align="left"/>nombre<br align="left"/>correo (UQ)<br align="left"/>password_hash, salt<br align="left"/>rol (ESTUDIANTE | DOCENTE | ADMINISTRADOR)<br align="left"/>activo, creado_en<br align="left"/></td></tr></table>>];
+  estudiante [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FCDDB0"><b>estudiante</b></td></tr><tr><td align="left">PK/FK usuario_id<br align="left"/>matricula (UQ)<br align="left"/>carrera<br align="left"/></td></tr></table>>];
+  docente [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FCDDB0"><b>docente</b></td></tr><tr><td align="left">PK/FK usuario_id<br align="left"/>departamento<br align="left"/></td></tr></table>>];
+  administrador [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FCDDB0"><b>administrador</b></td></tr><tr><td align="left">PK/FK usuario_id<br align="left"/>area<br align="left"/></td></tr></table>>];
+  sesion [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FFFAD7"><b>sesion</b></td></tr><tr><td align="left">PK token<br align="left"/>FK usuario_id<br align="left"/>expira_en<br align="left"/></td></tr></table>>];
+  notificacion [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FFFAD7"><b>notificacion</b></td></tr><tr><td align="left">PK id<br align="left"/>FK usuario_id<br align="left"/>mensaje, leida, creada_en<br align="left"/></td></tr></table>>];
+  reserva [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#E97777"><b>reserva</b></td></tr><tr><td align="left">PK id<br align="left"/>codigo (UQ, HU06)<br align="left"/>FK usuario_id<br align="left"/>FK recurso_id<br align="left"/>fecha, hora_inicio, hora_fin<br align="left"/>motivo, asistentes<br align="left"/>estado (PENDIENTE | CONFIRMADA |<br align="left"/>   CANCELADA | FINALIZADA)<br align="left"/>serie_id (HU05)<br align="left"/>tipo_cancelacion, motivo_cancelacion<br align="left"/>creada_en, actualizada_en, cancelada_en<br align="left"/></td></tr></table>>];
+  historial [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FFFAD7"><b>historial_reserva</b></td></tr><tr><td align="left">PK id<br align="left"/>FK reserva_id<br align="left"/>estado_anterior, estado_nuevo<br align="left"/>detalle, registrado_en<br align="left"/></td></tr></table>>];
+  recurso [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#E97777"><b>recurso</b></td></tr><tr><td align="left">PK id<br align="left"/>codigo (UQ)<br align="left"/>nombre, tipo (LABORATORIO | SALA)<br align="left"/>capacidad, ubicacion<br align="left"/>FK edificio_id<br align="left"/>estado (DISPONIBLE |<br align="left"/>   EN_MANTENIMIENTO | INACTIVO)<br align="left"/></td></tr></table>>];
+  laboratorio [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FCDDB0"><b>laboratorio</b></td></tr><tr><td align="left">PK/FK recurso_id<br align="left"/>tipo_lab, equipamiento<br align="left"/>requiere_supervisor<br align="left"/></td></tr></table>>];
+  sala [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FCDDB0"><b>sala</b></td></tr><tr><td align="left">PK/FK recurso_id<br align="left"/>tiene_proyector<br align="left"/>distribucion<br align="left"/></td></tr></table>>];
+  edificio [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#E97777"><b>edificio</b></td></tr><tr><td align="left">PK id<br align="left"/>nombre, campus<br align="left"/></td></tr></table>>];
+  parametro [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td bgcolor="#FFFAD7"><b>parametro</b></td></tr><tr><td align="left">PK clave<br align="left"/>valor, descripcion<br align="left"/></td></tr></table>>];
+  usuario -> reserva [label="realiza", fontsize=9, fontname="Helvetica", fontcolor="#5D0E41"];
+  recurso -> reserva [label="reservado en", fontsize=9, fontname="Helvetica", fontcolor="#5D0E41"];
+  edificio -> recurso [label="contiene", fontsize=9, fontname="Helvetica", fontcolor="#5D0E41"];
+  reserva -> historial;
+  usuario -> notificacion; usuario -> sesion;
+  usuario -> estudiante [arrowhead=teeodot]; usuario -> docente [arrowhead=teeodot]; usuario -> administrador [arrowhead=teeodot];
+  recurso -> laboratorio [arrowhead=teeodot]; recurso -> sala [arrowhead=teeodot];
+  {rank=same; usuario; edificio; parametro}
+}

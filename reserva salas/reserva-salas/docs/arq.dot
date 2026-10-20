@@ -1,0 +1,18 @@
+digraph A {
+  graph [rankdir=TB, fontname="Helvetica", nodesep=0.4, ranksep=0.7, pad=0.2];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, color="#5D0E41", penwidth=1.3];
+  edge [color="#5D0E41", fontname="Helvetica", fontsize=9, penwidth=1.2];
+  subgraph cluster_c { label="Navegador (cliente)"; style="rounded,dashed"; color="#A0153E"; fontname="Helvetica";
+    ui [label="Interfaz web\nindex.html · styles.css · app.js\n(paleta clara / oscura)", fillcolor="#FFFAD7"];
+    api [label="api.js\ncliente REST", fillcolor="#FCDDB0"];
+  }
+  subgraph cluster_s { label="Servidor Node.js (Express)"; style="rounded,dashed"; color="#A0153E"; fontname="Helvetica";
+    rt [label="routes.js\n24 rutas /api", fillcolor="#FCDDB0"];
+    sv [label="service.js\nGestorReservas · ValidadorConflictos\nCalendario · puedeReservar()", fillcolor="#FF9F9F"];
+    ad [label="db-node.js\nadaptador SQLite (node:sqlite)", fillcolor="#FCDDB0"];
+  }
+  db [label="SQLite (reservas.db)\ntablas · triggers · vistas", shape=cylinder, fillcolor="#E97777"];
+  ui -> api; api -> rt [label="HTTP + JSON\nBearer token"]; rt -> sv; sv -> ad; ad -> db [label="SQL"];
+  demo [label="Modo demo (sin servidor)\nsql.js: misma BD, mismo\nservice.js y routes.js", fillcolor="#FFFAD7", style="rounded,filled,dashed"];
+  api -> demo [style=dashed, label="si no hay API"];
+}
