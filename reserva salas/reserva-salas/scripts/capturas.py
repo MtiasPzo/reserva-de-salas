@@ -8,12 +8,20 @@ BASE = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:3000'
 OUT = sys.argv[2] if len(sys.argv) > 2 else 'capturas'
 os.makedirs(OUT, exist_ok=True)
 errores = []
+CLAVES_DEMO = {
+    'jose.castro@inacapmail.cl': 'eduardito1',
+    'matias.pozo@inacapmail.cl': 'maaatiaaaspoozooo',
+    'sebastian.delgado@inacapmail.cl': 'donsebastian',
+    'ljimenez@inacap.cl': 'luquitas1',
+    'jrivera@inacap.cl': 'jonathancito1',
+    'admin@inacap.cl': 'camilita1',
+}
 
 def login(page, correo):
     page.goto(BASE + '/')
     page.wait_for_selector('#form-login', state='visible')
     page.fill('#login-correo', correo)
-    page.fill('#login-pass', 'Reserva2026!')
+    page.fill('#login-pass', CLAVES_DEMO[correo])
     page.click('#form-login button[type=submit]')
     page.wait_for_selector('#view-app', state='visible')
     page.wait_for_timeout(700)
@@ -29,7 +37,7 @@ with sync_playwright() as p:
         page.wait_for_selector('#form-login', state='visible')
         page.wait_for_timeout(500)
         page.screenshot(path=f'{OUT}/01_login_{tema}.png')
-        login(page, 'ana.soto@inacapmail.cl')
+        login(page, 'jose.castro@inacapmail.cl')
         # Seleccionar bloque libre y mostrar validación
         page.click('.slot:not([disabled]) >> nth=' + ('60' if tema == 'light' else '150'), force=True)
         page.wait_for_timeout(600)
@@ -58,7 +66,7 @@ with sync_playwright() as p:
             page.wait_for_timeout(600)
             page.screenshot(path=f'{OUT}/06_mis_reservas.png')
             page.click('#btn-logout')
-            login(page, 'pfernandez@inacap.cl')
+            login(page, 'ljimenez@inacap.cl')
             page.click('[data-nav=docente]')
             page.select_option('#d-recurso', '1')
             page.fill('#d-motivo', 'Taller de Programación — sección 2')
@@ -88,7 +96,7 @@ with sync_playwright() as p:
     # Móvil
     ctx = b.new_context(viewport={'width': 400, 'height': 860}, color_scheme='light', device_scale_factor=2)
     page = ctx.new_page()
-    login(page, 'diego.munoz@inacapmail.cl')
+    login(page, 'matias.pozo@inacapmail.cl')
     page.screenshot(path=f'{OUT}/11_movil.png')
     w = page.evaluate('document.documentElement.scrollWidth')
     print('ancho movil', w)

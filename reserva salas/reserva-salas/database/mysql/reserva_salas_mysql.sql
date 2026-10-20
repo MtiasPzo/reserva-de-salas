@@ -3,7 +3,7 @@
 --  Script para MySQL 8.0.16+ / MariaDB 10.6+ (MySQL Workbench, XAMPP, phpMyAdmin)
 --  Equivalente al esquema SQLite que usa la aplicación (database/schema.sql).
 --  Crea la base, tablas, triggers de reglas de negocio, vistas y datos de prueba.
---  Contraseña de todos los usuarios de demostración: Reserva2026!
+--  Cuentas de demostración (las contraseñas se muestran en el README).
 -- =====================================================================
 DROP DATABASE IF EXISTS reserva_salas;
 CREATE DATABASE reserva_salas CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
@@ -290,17 +290,17 @@ INSERT INTO edificio (id, nombre, campus) VALUES
  (3,'Edificio C — Electricidad y Electrónica','Sede Valdivia');
 
 INSERT INTO usuario (id, nombre, correo, password_hash, salt, rol) VALUES
- (1,'Marcela Vidal Torres','admin@inacap.cl','1e9dbe233fd987a32c567b9b2d195052c5c42ddbceb4ecabe48a5d3a5da668c6','s4lt-adm1','ADMINISTRADOR'),
- (2,'Paula Fernández Rojas','pfernandez@inacap.cl','c237409fc666a97d81a3ff31b6c81dac6fcbaac663d57595e3e62505a9968efc','s4lt-doc1','DOCENTE'),
- (3,'Rodrigo Saavedra Paz','rsaavedra@inacap.cl','37a0bd278e46ac9132cf80ce68559610a58625ac2e0003e0dc8a51b51e1bc8f9','s4lt-doc2','DOCENTE'),
- (4,'Ana Soto Henríquez','ana.soto@inacapmail.cl','7971c9acc807eb8ea6bc2ab4d086d348eae96f51ea1233ed53fb71d939384f2d','s4lt-est1','ESTUDIANTE'),
- (5,'Diego Muñoz Carrasco','diego.munoz@inacapmail.cl','83e02d1054b23ec7a74ed09c62432e75cfc959885124475a8a1f47c0c6d6bf50','s4lt-est2','ESTUDIANTE'),
- (6,'Valentina Reyes Ojeda','valentina.reyes@inacapmail.cl','2b299ed2d125c288b0b9f52ab10cc99eeb5044b23d3ce0f9242c5f4fd77921e1','s4lt-est3','ESTUDIANTE');
+ (1,'Camila Marcela Urrutia Navarro','admin@inacap.cl','6a48c92dbfabb2556c094fd56e80031358a113c9053d511e9c3bbbe010abd4d5','s4lt-adm1','ADMINISTRADOR'),
+ (2,'Lucas Ernesto Jiménez Lagos','ljimenez@inacap.cl','796c036ae5707256047a6c8247ad685110461c140223a46cf276c47e3e10165b','s4lt-doc1','DOCENTE'),
+ (3,'Jonathan Eduardo Rivera Navarrete','jrivera@inacap.cl','d7c8785cd132825ec7e570cb8c2522b640f5f171376a4c70ec3edcebb6433ab8','s4lt-doc2','DOCENTE'),
+ (4,'José Eduardo Castro Vivanco','jose.castro@inacapmail.cl','6ebe09001493cd9504bd2d15914f7fb62dd8f5a7595adf2dd725b2553934cdc8','s4lt-est1','ESTUDIANTE'),
+ (5,'Matías Jesús Pozo Carrasco','matias.pozo@inacapmail.cl','be5cffd203075491f67ace5c9eb4152803a3b5e87f9e4aac40e4f585aa701893','s4lt-est2','ESTUDIANTE'),
+ (6,'Sebastián Ignacio Delgado Cárdenas','sebastian.delgado@inacapmail.cl','70f926784577e75a19f7c94d7b75dbe8beeeba00036758dd165f51a5fdb0f363','s4lt-est3','ESTUDIANTE');
 
 INSERT INTO administrador (usuario_id, area) VALUES (1,'Dirección de Operaciones — Sede Valdivia');
 INSERT INTO docente (usuario_id, departamento) VALUES (2,'Área Informática y Telecomunicaciones'),(3,'Área Electricidad y Electrónica');
 INSERT INTO estudiante (usuario_id, matricula, carrera) VALUES
- (4,'2024-11872','Ingeniería en Informática'),(5,'2025-03341','Analista Programador'),(6,'2023-09015','Ingeniería en Electricidad y Electrónica');
+ (4,'2023-06142','Ingeniería en Informática'),(5,'2022-08431','Analista Programador'),(6,'2024-10973','Ingeniería en Electricidad y Electrónica');
 
 INSERT INTO recurso (id, codigo, nombre, tipo, capacidad, ubicacion, edificio_id, estado) VALUES
  (1,'LAB-A101','Laboratorio de Computación 1','LABORATORIO',30,'Piso 1, ala norte',1,'DISPONIBLE'),

@@ -37,6 +37,14 @@
   function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 3800); }
   function modal(html) { $('modal-body').innerHTML = html; $('modal').hidden = false; const f = $('modal-body').querySelector('button, input, textarea'); if (f) f.focus(); }
   function closeModal() { $('modal').hidden = true; $('modal-body').innerHTML = ''; }
+  function labelTableCells(table) {
+    const labels = [...table.querySelectorAll('thead th')].map(th => th.textContent.trim());
+    table.querySelectorAll('tbody tr').forEach(row => {
+      row.querySelectorAll('td').forEach((cell, index) => {
+        if (labels[index]) cell.dataset.label = labels[index];
+      });
+    });
+  }
   function alertBox(el, tipo, titulo, items) {
     el.className = `alert alert-${tipo}`;
     el.innerHTML = `<strong>${esc(titulo)}</strong>${items && items.length ? `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}`;
@@ -73,7 +81,7 @@
     $('art-grid').innerHTML = pat.split('').map(c => `<i class="${c === '.' ? '' : c}"></i>`).join('');
   })();
   document.querySelectorAll('[data-demo]').forEach(b => b.addEventListener('click', () => {
-    $('login-correo').value = b.dataset.demo; $('login-pass').value = 'Reserva2026!'; $('login-pass').focus();
+    $('login-correo').value = b.dataset.demo; $('login-pass').value = b.dataset.pass; $('login-pass').focus();
   }));
   $('form-login').addEventListener('submit', async (ev) => {
     ev.preventDefault();
@@ -368,6 +376,7 @@
           <td><div class="actions">${r.cancelable ? `<button type="button" class="btn btn-danger btn-sm" data-cancel="${r.id}" data-code="${esc(r.codigo)}">Cancelar</button>`
             : (r.estado === 'PENDIENTE' || r.estado === 'CONFIRMADA') ? '<span class="small muted">Menos de 2 h: ya no se puede cancelar</span>' : ''}</div></td></tr>`).join('') + '</tbody>'
         : '<tbody><tr><td class="table-empty">No tienes reservas en este rango. Ve a Reservar para crear una.</td></tr></tbody>';
+      labelTableCells($('tabla-mias'));
       $('tabla-mias').querySelectorAll('[data-cancel]').forEach(b => b.addEventListener('click', () => pedirCancelacion(Number(b.dataset.cancel), b.dataset.code, cargarMias)));
     } catch (e) { toast(errorMsg(e)); }
   }
@@ -413,6 +422,7 @@
         if (o.estado === 'ERROR') est = `<span class="pill pill-bad">No válida</span><div class="small muted">${esc(o.errores[0].mensaje)}</div>`;
         return `<tr><td class="nowrap">${fechaCL(o.fecha)}</td><td>${diaDe(o.fecha)}</td><td>${est}</td></tr>`;
       }).join('') + '</tbody>';
+      labelTableCells($('tabla-plan'));
       return plan;
     } catch (e) { alertBox($('d-alert'), 'bad', errorMsg(e)); return null; }
   }
@@ -460,6 +470,7 @@
           <td><div class="actions">${r.estado === 'PENDIENTE' ? `<button type="button" class="btn btn-primary btn-sm" data-ok="${r.id}">Aprobar</button>` : ''}
           ${r.estado === 'PENDIENTE' || r.estado === 'CONFIRMADA' ? `<button type="button" class="btn btn-danger btn-sm" data-cancel="${r.id}" data-code="${esc(r.codigo)}">Cancelar</button>` : ''}</div></td></tr>`).join('') + '</tbody>'
         : '<tbody><tr><td class="table-empty">No hay reservas con estos filtros.</td></tr></tbody>';
+      labelTableCells($('tabla-admin'));
       $('tabla-admin').querySelectorAll('[data-ok]').forEach(b => b.addEventListener('click', async () => {
         try { const out = await api('POST', `/api/reservas/${b.dataset.ok}/confirmar`); toast(out.mensaje); cargarAdmin(); } catch (e) { toast(errorMsg(e)); }
       }));
@@ -496,6 +507,7 @@
           <td><div class="actions"><button type="button" class="btn btn-ghost btn-sm" data-edit="${r.id}">Editar</button>
           ${r.estado === 'DISPONIBLE' ? `<button type="button" class="btn btn-danger btn-sm" data-estado="EN_MANTENIMIENTO" data-id="${r.id}">Mantenimiento</button>`
             : `<button type="button" class="btn btn-primary btn-sm" data-estado="DISPONIBLE" data-id="${r.id}">Habilitar</button>`}</div></td></tr>`).join('') + '</tbody>';
+      labelTableCells($('tabla-salas'));
       $('tabla-salas').querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => formSala(S.recursos.find(r => r.id === Number(b.dataset.edit)))));
       $('tabla-salas').querySelectorAll('[data-estado]').forEach(b => b.addEventListener('click', async () => {
         try {

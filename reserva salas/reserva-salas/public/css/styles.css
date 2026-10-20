@@ -237,6 +237,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .sw-mine { background: var(--slot-mine); border-color: var(--slot-mine); }
 .sw-pend { background: repeating-linear-gradient(135deg, var(--slot-pend) 0 4px, var(--slot-busy) 4px 7px); }
 .cal-scroll { overflow-x: auto; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.scroll-hint { display: none; }
 .cal { display: grid; grid-template-columns: 54px repeat(6, minmax(92px, 1fr)); min-width: 620px; position: relative; }
 .cal-h { position: sticky; top: 0; background: var(--surface); padding: .55rem .4rem; border-bottom: 1.5px solid var(--line); text-align: center; z-index: 2; }
 .cal-h strong { display: block; font: 700 .82rem/1.1 var(--font-body); text-transform: capitalize; }
@@ -327,20 +328,70 @@ textarea.csv-out { font-family: var(--font-mono); font-size: .75rem; min-height:
   .ticket { grid-column: 1 / -1; position: static; }
   .admin-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 1080px) {
+  .topbar-inner { column-gap: .75rem; }
+  .topbar-actions { margin-left: auto; }
+  .tabs {
+    order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto;
+    scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+  }
+  .tabs button { white-space: nowrap; min-height: 44px; }
+}
 @media (max-width: 860px) {
   .reservar-grid, .docente-grid { grid-template-columns: 1fr; }
-  .rooms { flex-direction: row; overflow-x: auto; padding-bottom: .3rem; }
-  .rooms li { flex: 0 0 210px; }
+  .rooms { flex-direction: row; overflow-x: auto; padding-bottom: .4rem; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .rooms li { flex: 0 0 min(210px, 70vw); scroll-snap-align: start; }
+  .room { min-height: 96px; }
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .login { grid-template-columns: 1fr; }
   .login-art { min-height: 120px; }
   .art-grid { inset: 16px; grid-template-columns: repeat(10, 1fr); }
   .art-grid i:nth-child(n+31) { display: none; }
   .user-chip { display: none; }
+  .scroll-hint { display: block; }
+  .cal-h:first-child, .cal-times { position: sticky; left: 0; background: var(--surface); z-index: 3; }
+  .cal-times { z-index: 2; border-right: 1px solid var(--line); }
 }
-@media (max-width: 520px) {
-  .row-2 { grid-template-columns: 1fr 1fr; }
-  .tabs { order: 3; flex-basis: 100%; overflow-x: auto; flex-wrap: nowrap; }
-  .tabs button { white-space: nowrap; }
-  .topbar-actions { margin-left: auto; }
+@media (max-width: 640px) {
+  :root { --slot-h: 32px; }
+  input, select, textarea { font-size: 16px; }
+  .btn, .icon-btn, .chip, .seg-btn { min-height: 44px; }
+  .wrap { padding-block: 1rem 2rem; }
+  .view { gap: .9rem; }
+  .cal-nav { width: 100%; }
+  .cal-nav .btn { min-height: 44px; }
+  .cal-nav #cal-today { flex: 1; }
+  .filters .field { flex-basis: calc(50% - .35rem); }
+  .filters .field.grow { flex-basis: 100%; }
+  .filters-actions { width: 100%; }
+  .filters-actions .btn { flex: 1; min-height: 44px; }
+  .table-wrap { border: 0; background: transparent; overflow: visible; }
+  .table { display: block; }
+  .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .table tbody { display: grid; gap: .75rem; }
+  .table tr { display: block; padding: .55rem .8rem; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); }
+  .table td { display: block; padding: .35rem 0; border: 0; overflow-wrap: anywhere; }
+  .table td + td { border-top: 1px solid var(--line); }
+  .table td[data-label]::before { content: attr(data-label); display: block; margin-bottom: .1rem; color: var(--ink-soft); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .table td.table-empty { padding: 1.1rem .3rem; }
+  .table .actions { justify-content: flex-start; }
+  .table .actions .btn { min-height: 44px; }
+  .modal { padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+  .modal-card { max-height: min(90vh, 90dvh); padding: 1.1rem; }
+  .toast { width: max-content; text-align: center; border-radius: 14px; }
+}
+@media (max-width: 420px) {
+  .topbar-inner { gap: .35rem .5rem; }
+  .brand { font-size: 1.2rem; }
+  .topbar-actions { gap: .3rem; }
+  .topbar-actions .icon-btn { width: 42px; height: 42px; }
+  .topbar-actions #btn-logout { min-height: 42px; padding-inline: .7rem; }
+  .login-art { min-height: 80px; }
+  .login-panel { padding-block: 1.5rem 2rem; }
+  .row-2 { grid-template-columns: 1fr; }
+  #form-reserva .row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpis { gap: .5rem; }
+  .kpi { padding: .7rem; }
+  .kpi b { font-size: 1.55rem; }
+  .voucher-code { font-size: 1.45rem; letter-spacing: 0; overflow-wrap: anywhere; }
 }

@@ -32,13 +32,16 @@ npm test             # 19 pruebas automatizadas (node --test)
 
 Variables opcionales: `PORT` (3000), `DB_FILE` (`data/reservas.db`), `TZ` (`America/Santiago`).
 
-### Cuentas de prueba (contraseña `Reserva2026!`)
+### Cuentas de prueba
 
-| Perfil | Correo |
-|---|---|
-| Estudiante | ana.soto@inacapmail.cl · diego.munoz@inacapmail.cl · valentina.reyes@inacapmail.cl |
-| Docente | pfernandez@inacap.cl · rsaavedra@inacap.cl |
-| Administrador | admin@inacap.cl |
+| Perfil | Correo | Contraseña |
+|---|---|---|
+| Administradora | admin@inacap.cl | `camilita1` |
+| Docente | ljimenez@inacap.cl | `luquitas1` |
+| Docente | jrivera@inacap.cl | `jonathancito1` |
+| Estudiante | jose.castro@inacapmail.cl | `eduardito1` |
+| Estudiante | matias.pozo@inacapmail.cl | `maaatiaaaspoozooo` |
+| Estudiante | sebastian.delgado@inacapmail.cl | `donsebastian` |
 
 ### Modo demostración
 

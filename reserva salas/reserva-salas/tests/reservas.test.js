@@ -26,8 +26,16 @@ async function req(method, path, body, token) {
   const ct = r.headers.get('content-type') || '';
   return { status: r.status, body: ct.includes('json') ? await r.json() : await r.text() };
 }
-async function login(correo) {
-  const r = await req('POST', '/api/login', { correo, password: 'Reserva2026!' });
+const C = {
+  ana: { correo: 'jose.castro@inacapmail.cl', password: 'eduardito1' },
+  diego: { correo: 'matias.pozo@inacapmail.cl', password: 'maaatiaaaspoozooo' },
+  vale: { correo: 'sebastian.delgado@inacapmail.cl', password: 'donsebastian' },
+  paula: { correo: 'ljimenez@inacap.cl', password: 'luquitas1' },
+  rodrigo: { correo: 'jrivera@inacap.cl', password: 'jonathancito1' },
+  admin: { correo: 'admin@inacap.cl', password: 'camilita1' }
+};
+async function login(cuenta) {
+  const r = await req('POST', '/api/login', cuenta);
   assert.equal(r.status, 200);
   return r.body.token;
 }
@@ -37,21 +45,21 @@ test.before(async () => {
   ctx = createApp({ dbFile: ':memory:' });
   await new Promise(res => { server = ctx.app.listen(0, res); });
   base = `http://127.0.0.1:${server.address().port}`;
-  T.ana = await login('ana.soto@inacapmail.cl');
-  T.diego = await login('diego.munoz@inacapmail.cl');
-  T.vale = await login('valentina.reyes@inacapmail.cl');
-  T.paula = await login('pfernandez@inacap.cl');
-  T.rodrigo = await login('rsaavedra@inacap.cl');
-  T.admin = await login('admin@inacap.cl');
+  T.ana = await login(C.ana);
+  T.diego = await login(C.diego);
+  T.vale = await login(C.vale);
+  T.paula = await login(C.paula);
+  T.rodrigo = await login(C.rodrigo);
+  T.admin = await login(C.admin);
 });
 test.after(() => { server.close(); ctx.db.close(); });
 
 test('PR-01 Autenticación: credenciales válidas e inválidas; rutas protegidas', async () => {
-  assert.equal((await req('POST', '/api/login', { correo: 'ana.soto@inacapmail.cl', password: 'mala' })).status, 401);
+  assert.equal((await req('POST', '/api/login', { correo: C.ana.correo, password: 'mala' })).status, 401);
   assert.equal((await req('GET', '/api/recursos')).status, 401);
   const me = await req('GET', '/api/me', null, T.ana);
   assert.equal(me.body.usuario.rol, 'ESTUDIANTE');
-  assert.equal(me.body.usuario.matricula, '2024-11872');
+  assert.equal(me.body.usuario.matricula, '2023-06142');
 });
 
 test('PR-02 HU01 Calendario muestra horarios ocupados del recurso', async () => {
